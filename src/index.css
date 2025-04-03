@@ -1,0 +1,44 @@
+@import "tailwindcss";
+body{
+  background-color: black;
+}
+html{
+  font-size: 62.5%;
+}
+p,a,li,input{
+  font-size: 1.6rem;
+  letter-spacing: 0.12rem;
+  line-height: 1.5;
+  color: white;
+}
+button{
+  padding: 0.8rem 3.2rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-size: 1.6rem;
+  margin-left: 1.5rem;
+}
+.main-section{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.section-form{
+  padding: 1.6rem;
+  background-color: #212f3d;
+}
+.section-post{
+  width: 90%;
+
+  & ol{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:3.2rem;
+    list-style-type: decimal-leading-zero;
+  }
+  
+
+}
