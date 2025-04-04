@@ -20,6 +20,8 @@ export const Posts = () => {
         console.error(error);
       }
     };
+
+   
   
     useEffect(() => {
       getPostData();

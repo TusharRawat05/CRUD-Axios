@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { addPost } from '../api/PostApi';
+import { addPost, editPost } from '../api/PostApi';
 
 
 export default function Form({post,setPost,updatePost,setupdatePost}) {
@@ -15,6 +15,9 @@ export default function Form({post,setPost,updatePost,setupdatePost}) {
             body:updatePost.body || "",
         })
     },[updatePost])
+
+     let isempty=Object.keys(updatePost).length===0;
+
     const handleInputChange=(e)=>{
         const name=e.target.name;
         const value=e.target.value;
@@ -32,9 +35,34 @@ export default function Form({post,setPost,updatePost,setupdatePost}) {
         setaddData({title:"",body:""}); // removing data from input field after submiiting
        }
     }
+
+    const updatePostData=async()=>{
+        const res=await editPost(updatePost.id,addData);
+        
+        setPost((prev)=>{ // prev giving all the prev data in posts
+            return prev.map((curr)=>{ // going through all the ids checking for the upadted post 
+                return curr.id===res.data.id ? res.data:curr;
+            })
+
+        })
+        setaddData({title:"",body:""});
+        setupdatePost({});
+
+
+
+    }
+    //form submission
     const handleSubmit=(e)=>{
         e.preventDefault();
-        addPostData();
+        const action=e.nativeEvent.submitter.value;
+        if(action==="Add"){
+            addPostData();
+        }
+        else if(action==="Edit"){
+            updatePostData();
+        }
+      
+
     }
   return (
     <form className='flex gap-2 mt-[4rem] mb-[4rem] bg-gray-500 p-4' onSubmit={handleSubmit} >
@@ -55,7 +83,7 @@ export default function Form({post,setPost,updatePost,setupdatePost}) {
               value={addData.body}
               onChange={(e)=>handleInputChange(e)}/>
         </div>
-        <button className='bg-green-400' type='submit'>Add</button>
+        <button className='bg-green-400' type='submit' value={isempty ? "Add" :"Edit"}>{isempty ? "Add" :"Edit"}</button>
     </form>
   )
 }
